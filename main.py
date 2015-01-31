@@ -3,6 +3,7 @@
 from ipcalc import Network
 from optparse import OptionParser
 import subprocess
+import os
 
 
 def main():
@@ -24,8 +25,9 @@ def main():
     net = Network(target)
 
     hosts_up = []
+    DEVNULL = open(os.devnull, 'w')
     for ip in Network(str(net.host_first()) + '/' + target.split('/')[1]):
-        if subprocess.call(['ping', '-i', interval, '-w', timeout, '-c', count, str(ip)]) == 0:
+        if subprocess.call(['ping', '-i', interval, '-w', timeout, '-c', count, str(ip)], stdout=DEVNULL) == 0:
             hosts_up.append(ip)
 
     print "Hosts up:"
