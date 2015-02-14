@@ -24,15 +24,11 @@ def main():
     target = options.target
     net = Network(target)
 
-    hosts_up = []
     DEVNULL = open(os.devnull, 'w')
     for ip in Network(str(net.host_first()) + '/' + target.split('/')[1]):
         if subprocess.call(['ping', '-i', interval, '-w', timeout, '-c', count, str(ip)], stdout=DEVNULL) == 0:
-            hosts_up.append(ip)
+            print str(ip)
 
-    print "Hosts up:"
-    for host in hosts_up:
-        print host
 
 if __name__ == '__main__':
     main()
